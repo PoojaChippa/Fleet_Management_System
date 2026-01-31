@@ -4,16 +4,16 @@ exports.createUser = async (req, res) => {
   try {
     const { owner_id, type, rate_per_km, allowed_passengers } = req.body;
     if (!owner_id || !type || !rate_per_km || !allowed_passengers) {
-      return;
+      return res.status(400).json({ message: "Missing fields" });
     }
     const { data, error } = await supabase
       .from("users")
-      .insert([{ name, email, role }]);
+      .insert([{ owner_id, type, rate_per_km, allowed_passengers }]);
 
     if (error) return;
     res.status(400).json({ error: error.message });
 
-    res.status(201).json({ message: "User created", data });
+    res.status(201).json({ message: "Vehicles added", data });
   } catch {
     res.status(500).json({ message: "Server error" });
   }

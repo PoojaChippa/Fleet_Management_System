@@ -4,8 +4,7 @@ exports.createUser = async (req, res) => {
   try {
     const { name, email, role } = req.body;
     if (!name || !email || !role) {
-        return;
-         res.status(400).json({ message: "Missing fields" });
+      return res.status(400).json({ message: "Missing fields" });
     }
     const { data, error } = await supabase
       .from("users")
